@@ -11,7 +11,7 @@ import java.math.BigInteger;
 6. Bob decrypts by computing m = cd (mod n).
  */
 
-public class Lab1 {
+public class Lab2 {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
 
