@@ -9,7 +9,6 @@ import java.math.BigInteger;
 4. Bob makes n and e public, and keeps p, q,d secret.
 5. Alice encrypts m as c = me (mod n) and sends c to Bob.
 6. Bob decrypts by computing m = cd (mod n).
- * 
  */
 
 public class Lab1 {
