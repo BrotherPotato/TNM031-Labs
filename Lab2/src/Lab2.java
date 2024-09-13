@@ -65,9 +65,5 @@ public class Lab2 {
         String decodedMessage = new String(decodedNumber.toByteArray());
 
         System.out.println(decodedMessage);
-
-
-
-
     }
 }
