@@ -5,36 +5,18 @@ import java.util.Random;
 
 
 /*
-1. Bob chooses secret primes p and q and computes n =pq.
+1. Bob chooses secret primes p and q and computes n = pq.
 2. Bob chooses e with gcd(e, (p - l)(q - 1)) = 1.
-3. Bob computes d with de .1 (mod (p - l)(q - 1)).
+3. Bob computes d with d*e mod (p - l)(q - 1)) = 1.
 4. Bob makes n and e public, and keeps p, q,d secret.
-5. Alice encrypts m as c = me (mod n) and sends c to Bob.
-6. Bob decrypts by computing m = cd (mod n).
+5. Alice encrypts m as c = m^e (mod n) and sends c to Bob.
+6. Bob decrypts by computing m = c^d (mod n).
  */
 
 public class Lab2 {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-
-        // // to convert an integer b into a BigInteger
-        // int b = 170;
-        // BigInteger bigB = new BigInteger(String.valueOf(b));
-
-        // // to read a string from keyboard
-
-        // // to convert a string s into a BigInteger
-        // String s = "abc";
-        // BigInteger c = new BigInteger(s.getBytes());
-
-        // System.out.println(input);
-
-        // to convert a BigInteger back to a string
-        // BigInteger a;
-        // String s = new String(a.toByteArray());
-
         /*************Generating keys, steps 1-4 lecture 6, slide 53*************/
-        int bitlength = 100;
+        int bitlength = 100; // should be 2048 or 4096 for real use
 
         // 1. Generate large secrete primes p and q and compute n
         BigInteger p = BigInteger.probablePrime(bitlength, new Random());
@@ -45,7 +27,7 @@ public class Lab2 {
         // 2. Generate e so that GCD(e, (p-1)(q-1)) = 1
         BigInteger gcdNumber = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));   // GCD = (p-1)(q-1)
 
-        BigInteger e = gcdNumber.subtract(BigInteger.ONE);  // e = GCD-1 (only to inichiate e)
+        BigInteger e = gcdNumber.subtract(BigInteger.ONE);  // e = GCD-1 (only to initiate e)
 
         // Make sure that e and GCD-number in co-prime (no common factors)
         while(!(e.gcd(gcdNumber).equals(BigInteger.ONE))){  // Subtract with one until finding biggest common divisor (common factor)
@@ -60,7 +42,7 @@ public class Lab2 {
 
         /*************Encrypt message, step 5 lecture 6, slide 53*************/
         
-        System.out.println("Please enter what you want to encrypt:");   // Message to encrypts
+        System.out.print("Please enter what you want to encrypt: ");   // Message to encrypts
 
         String messageString = (new BufferedReader(new InputStreamReader(System.in))).readLine();
 
@@ -70,7 +52,7 @@ public class Lab2 {
         BigInteger cipherNumber = messageNumber.modPow(e, n);
 
         // Write out cipher, skip in reality, just send it to other person
-        System.out.println(cipherNumber);
+        System.out.println("The cipher number: " + cipherNumber);
 
         
         /*************Decrypt message, step 6 lecture 6, slide 53*************/
@@ -80,7 +62,7 @@ public class Lab2 {
 
         String decodedMessage = new String(decodedNumber.toByteArray());
 
-        // Write out decrypted message
-        System.out.println(decodedMessage);
+        // Write out decrypted message        
+        System.out.println("The decoded message: " + decodedMessage);
     }
 }
