@@ -1,3 +1,8 @@
+// public class SecureAdditionClient {
+    
+// }
+
+// BORDE ANPASSA KOD
 
 // Server: Julia Karlsson
 // Password for server: lab3_server_password
@@ -14,14 +19,14 @@ import java.util.StringTokenizer;
 
 // An example class that uses the secure server socket class
 
-public class SecureAdditionServer {
+public class SecureAdditionClientTest {
     private int port;
     // This is not a reserved port number
     static final int DEFAULT_PORT = 8189;
-    static final String KEYSTORE = "Lab3/src/lab3_server.ks"; 
-    static final String TRUSTSTORE = "Lab3/src/lab3_server_truststore.ks";
-    static final String STOREPASSWD = "lab3_server_password";
-    static final String ALIASPASSWD = "lab3_server_password"; // borde va samma
+    static final String KEYSTORE = "Lab3/src/lab3_client.ks"; 
+    static final String TRUSTSTORE = "Lab3/src/lab3_client_truststore.ks";
+    static final String STOREPASSWD = "lab3_client_password";
+    static final String ALIASPASSWD = "lab3_client_password"; // borde va samma
     /*
      * Constructor*
      * 
@@ -32,7 +37,7 @@ public class SecureAdditionServer {
      * will listen for requests
      */
 
-    SecureAdditionServer(int port) {
+    SecureAdditionClientTest(int port) {
         this.port = port;
     };
 
