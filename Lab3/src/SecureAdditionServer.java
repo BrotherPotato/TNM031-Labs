@@ -1,20 +1,8 @@
-// import javax.net.SocketFactory;
-// import javax.net.*;
-// import java.net.*; // behöver inte?
 
-// public class Lab3 {
-//     public static void main(String[] args) throws Exception {
-//         System.out.println("Hello, World!");
-//         SocketFactory asd = null;
-
-//     }}
-
-
-
-// Server Julia Karlsson
+// Server: Julia Karlsson
 // Password for server: lab3_server_password
 
-// Client Max Wiklundh
+// Client: Max Wiklundh
 // Password for client: lab3_client_password
 
 
@@ -24,21 +12,16 @@ import javax.net.ssl.*;
 import java.security.*;
 import java.util.StringTokenizer;
 
-/* An example
-
- class that
- uses the
- secure server socket class
- */
+// An example class that uses the secure server socket class
 
 public class SecureAdditionServer {
     private int port;
     // This is not a reserved port number
     static final int DEFAULT_PORT = 8189;
-    static final String KEYSTORE = "jpatkeystore.ks";
-    static final String TRUSTSTORE = "jpattruststore.ks";
-    static final String STOREPASSWD = "changeit";
-    static final String ALIASPASSWD = "changeit";
+    static final String KEYSTORE = "Lab3/src/lab3_server.ks"; 
+    static final String TRUSTSTORE = "Lab3/src/lab3_server_truststore.ks";
+    static final String STOREPASSWD = "lab3_server_password";
+    static final String ALIASPASSWD = "lab3_server_password"; // borde va samma
     /*
      * Constructor*
      * 
@@ -61,12 +44,16 @@ public class SecureAdditionServer {
             ks.load(new FileInputStream(KEYSTORE), STOREPASSWD.toCharArray());
             KeyStore ts = KeyStore.getInstance("JCEKS");
             ts.load(new FileInputStream(TRUSTSTORE), STOREPASSWD.toCharArray());
+            
+
 
             KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 
             kmf.init(ks, ALIASPASSWD.toCharArray());
 
             TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+
+
 
             tmf.init(ts);
 
@@ -76,19 +63,33 @@ public class SecureAdditionServer {
 
             SSLServerSocketFactory sslServerFactory = sslContext.getServerSocketFactory();
 
+
+
             SSLServerSocket sss = (SSLServerSocket) sslServerFactory.createServerSocket(port);
 
             sss.setEnabledCipherSuites(sss.getSupportedCipherSuites());
 
-            SSLSocket incoming = (SSLSocket) sss.accept();
+            System.out.println(sss);
+
+
+            SSLSocket incoming = (SSLSocket)sss.accept();
+
+
             BufferedReader in;
+
+
             in = new BufferedReader(new InputStreamReader(incoming.getInputStream()));
+
+
 
             PrintWriter out = new PrintWriter(incoming.getOutputStream(), true);
 
             String str;
+            out.println("The result is ");
 
             while (!(str = in.readLine()).equals("")) {
+                out.println("The result is ");
+
                 double result = 0;
                 StringTokenizer st = new StringTokenizer(str);
                 try {
