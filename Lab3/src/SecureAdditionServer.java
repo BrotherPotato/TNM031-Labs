@@ -94,7 +94,7 @@ public class SecureAdditionServer {
                 StringTokenizer st = new StringTokenizer(str);
                 try {
                     while (st.hasMoreTokens()) {
-                        Double d = new Double(st.nextToken());
+                        Double d =  Double.valueOf(st.nextToken());
                         result += d.doubleValue();
                     }
                     out.println("The result is " + result);
