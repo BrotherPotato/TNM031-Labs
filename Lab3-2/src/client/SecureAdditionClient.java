@@ -45,6 +45,11 @@ public class SecureAdditionClient {
 			SSLSocketFactory sslFact = sslContext.getSocketFactory();
 			SSLSocket client = (SSLSocket) sslFact.createSocket(host, port);
 			client.setEnabledCipherSuites(client.getSupportedCipherSuites());
+
+			for (String iterable_element : client.getEnabledCipherSuites()) {
+				System.out.println(iterable_element);
+			}	
+
 			System.out.println("\n>>>> SSL/TLS handshake completed");
 
 			BufferedReader socketIn;
@@ -131,7 +136,7 @@ public class SecureAdditionClient {
 				default:
 					break;
 			}
-
+			sca.close();
 			socketOut.println("");
 		} catch (Exception x) {
 			System.out.println(x);

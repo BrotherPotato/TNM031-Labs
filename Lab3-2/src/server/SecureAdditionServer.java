@@ -49,6 +49,11 @@ public class SecureAdditionServer {
 			SSLServerSocket sss = (SSLServerSocket) sslServerFactory.createServerSocket(port);
 			sss.setEnabledCipherSuites(sss.getSupportedCipherSuites());
 
+			for (String iterable_element : sss.getEnabledCipherSuites()) {
+				System.out.println(iterable_element);
+			}	
+
+
 			System.out.println("\n>>>> SecureAdditionServer: active ");
 			SSLSocket incoming = (SSLSocket) sss.accept();
 
