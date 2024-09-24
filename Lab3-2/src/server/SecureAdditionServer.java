@@ -7,6 +7,8 @@ import javax.net.ssl.*;
 import java.security.*;
 import java.util.StringTokenizer;
 
+import java.util.Scanner;
+
 public class SecureAdditionServer {
 	private int port;
 	// This is not a reserved port number
@@ -70,55 +72,72 @@ public class SecureAdditionServer {
 			// }
 			// }
 			String str;
-
+			String fileName;
 
 			str = in.readLine();
-			try {
-				//int choice = Integer.parseInt(str);
-				String choice = str;
-				switch (choice) {
-					case "1": // upload
-						// try catch runt med IOException e
-						String fileName = in.readLine();
+			// int choice = Integer.parseInt(str);
+			String choice = str;
+			switch (choice) {
+				case "1": // download
+					// while ((readLine = in.readLine()) != null) {
+					// out.println(readLine);
+					// }
+					fileName = in.readLine();
 
-						File uploadedFile = new File(System.getProperty("user.dir") + "/" + fileName); // kanske	 /server/files/
+					String filePath = System.getProperty("user.dir") + "/server/" + fileName;
+					filePath = "Lab3-2/src/server/files/" + fileName;
 
-						uploadedFile.createNewFile(); // only creates a file if there is no file with that name
+					File targetFile = new File(filePath);
+					System.out.println(targetFile.exists());
+					System.out.println("AAAAAAA");
 
-						FileWriter writer = new FileWriter(uploadedFile);
-						
-						String readLine;
-
-						while ((readLine = in.readLine()) != null) { 
-
-							writer.write(readLine + "\n");
+					if (targetFile.exists()) {
+						Scanner myReader = new Scanner(targetFile);
+						while (myReader.hasNextLine()) {
+							String data = myReader.nextLine();
+							System.out.println(data);
+							out.println(data);
 						}
-						writer.close();
+						myReader.close();
+						out.close();
+					}
+
+					break;
+				case "2": // upload
+					// try catch runt med IOException e
+					fileName = in.readLine();
+
+					File uploadedFile = new File("Lab3-2/src/server/files/" + fileName); // kanske
+																									// /server/files/
+					uploadedFile.createNewFile(); // only creates a file if there is no file with that name
+
+					FileWriter writer = new FileWriter(uploadedFile);
+
+					String readLine;
+
+					while ((readLine = in.readLine()) != null) {
+
+						writer.write(readLine + "\n");
+					}
+					writer.close();
+
+					break;
+
+				case "3": // delete
+					fileName = in.readLine();
+					File fileToDelete = new File("Lab3-2/src/server/files/" + fileName); // kanske
+
+					if (fileToDelete.delete()) {
+						out.println("You deleted daddy, SLAYY");
+					} else{
+						System.out.println("daddy to strong");
+					}
 
 						break;
-					case "2": // download
 
-						while ((readLine = in.readLine()) != null) {
-							out.println(readLine);
-						}
+				default:
+					out.println("Sorry, your list contains an invalid number");
 
-
-						break;
-
-					case "3": // delete
-						str = in.readLine();
-						File file = new File(System.getProperty("user.dir") + "/" + str);
-
-						if(file.delete())
-
-						break;
-
-					default:
-						break;
-				}
-
-			} catch (NumberFormatException nfe) {
-				out.println("Sorry, your list contains an invalid number");
 			}
 
 			incoming.close();

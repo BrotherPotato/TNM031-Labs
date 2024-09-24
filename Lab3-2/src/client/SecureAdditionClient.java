@@ -5,6 +5,8 @@ import java.net.*;
 import java.security.KeyStore;
 import javax.net.ssl.*;
 
+import java.util.Scanner;
+
 public class SecureAdditionClient {
 	private InetAddress host;
 	private int port;
@@ -55,15 +57,74 @@ public class SecureAdditionClient {
 			// socketOut.println(numbers);
 			// System.out.println(socketIn.readLine());
 
-			String option = "1";
+			Scanner sca = new Scanner(System.in);
+			String data;
+			System.out.print("Please: ");
+
+			String option = sca.nextLine();
+			String fileName;
+			String filePath;
+
+			socketOut.println(option);
+
+			// String option = "1";
 			switch (option) {
-				case "1":
+				case "1": // download
+					// send filename
+
+					System.out.print("Please enter a filename: ");
+					fileName = sca.nextLine();
+					socketOut.println(fileName);
+
+					// filePath = System.getProperty("user.dir") + "/client/files/" + fileName;
+					filePath = "Lab3-2/src/client/files/" + fileName;
+
+					File downloadedFile = new File(filePath); // kanske
+
+					downloadedFile.createNewFile(); // only creates a file if there is no file with that name
+
+					FileWriter writer = new FileWriter(downloadedFile);
+
+					while ((data = socketIn.readLine()) != null) {
+						writer.write(data + "\n");
+					}
+
+					writer.close();
 
 					break;
-				case "2":
+				case "2": // upload
+					System.out.print("Please enter a filename: ");
+					fileName = sca.nextLine();
+					socketOut.println(fileName);
+
+					filePath = "Lab3-2/src/client/files/" + fileName;
+
+					File targetFile = new File(filePath);
+
+					if (targetFile.exists()) {
+						Scanner myReader = new Scanner(targetFile);
+						while (myReader.hasNextLine()) {
+							data = myReader.nextLine();
+							System.out.println(data);
+							socketOut.println(data);
+						}
+						myReader.close();
+						socketOut.close();
+					}
 
 					break;
-				case "3":
+				case "3": // delete
+
+					System.out.print("Please enter a filename to delete: ");
+					fileName = sca.nextLine();
+					socketOut.println(fileName);
+
+					while ((data = socketIn.readLine()) != null) {
+						System.out.println(data);
+					}
+
+					socketIn.close();
+					socketOut.close();
 
 					break;
 
